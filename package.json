@@ -1,0 +1,20 @@
+{
+  "name": "Party-Lights",
+  "version": "0.0.0",
+  "description": "Web UI for controlling ESP-Lights",
+  "scripts": {
+    "install": "install-vscode-extensions",
+    "ui": "cd ui && yarn"
+  },
+  "repository": "git@github.com:cinderblock/Party-Lights.git",
+  "author": "Cameron Tacklind <cameron@tacklind.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "install-vscode-extensions": "^1.0.0",
+    "prettier": "^1.15.2"
+  },
+  "dependencies": {
+    "yarn": "^1.12.3"
+  }
+}

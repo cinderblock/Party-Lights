@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "WebUI Dev Server",
+      "type": "shell",
+      "command": "yarn",
+      "args": ["ui", "setup", "start"],
+      "options": {
+        "cwd": "${workspaceRoot}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "shared"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
