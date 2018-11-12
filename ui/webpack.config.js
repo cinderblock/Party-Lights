@@ -5,7 +5,6 @@ const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -36,6 +35,34 @@ module.exports = {
       warnings: true,
       errors: true,
     },
+    proxy: {
+      '/socket.io': {
+        target: 'http://localhost:8000',
+        ws: true,
+        changeOrigin: true,
+      },
+    },
+    before(app, server) {
+      setImmediate(() => {
+        const qrcode = require('qrcode-terminal');
+        const chalk = require('chalk');
+
+        const hostname = require('os').hostname();
+
+        const port = server.listeningApp.address().port;
+
+        const localURL = `http://localhost:${port}`;
+        const remoteURL = `http://${hostname}:${port}`;
+
+        console.log();
+        console.log(chalk.yellow('Ctrl + click here:'), chalk.underline.blue(localURL));
+        console.log();
+        console.log(chalk.yellow('On your phone:'), chalk.underline.blue(remoteURL));
+        console.log();
+        qrcode.generate(remoteURL);
+        console.log();
+      });
+    },
   },
   devtool: 'cheap-module-source-map',
   module: {
@@ -65,19 +92,3 @@ module.exports = {
     ],
   },
 };
-
-const qrcode = require('qrcode-terminal');
-const chalk = require('chalk');
-
-const hostname = require('os').hostname();
-
-const localURL = `http://localhost:${module.exports.devServer.port}`;
-const remoteURL = `http://${hostname}:${module.exports.devServer.port}`;
-
-console.log();
-console.log(chalk.yellow('Ctrl + click here:'), chalk.underline.blue(localURL));
-console.log();
-console.log(chalk.yellow('On your phone:'), chalk.underline.blue(remoteURL));
-console.log();
-qrcode.generate(remoteURL);
-console.log();

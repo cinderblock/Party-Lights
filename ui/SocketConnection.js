@@ -1,40 +1,44 @@
+import io from 'socket.io-client';
+
 // config
-const socketURL = 'ws://esp-lights/ws';
+const socketURL = undefined;
 
-const socket = new WebSocket(socketURL);
+const socket = io(socketURL, {
+  transports: ['websocket'],
+});
 
-socket.addEventListener('open', console.log.bind(0, 'Open:'));
-socket.addEventListener('error', console.log.bind(0, 'Error:'));
-socket.addEventListener('message', console.log.bind(0, 'Message:'));
+socket.on('error', console.log.bind(0, 'Error:'));
 
 const Store = {};
 
-// socket.on('startuptime', u => (Store.startuptime = u));
+socket.on('startuptime', u => (Store.startuptime = u));
 
 window.addEventListener(
   'deviceorientation',
   ({ alpha, beta, gamma }) =>
     alpha !== null && socket.send('event' /*, { name: 'deviceorientation', value: { alpha, beta, gamma } } */)
+    alpha !== null && socket.emit('event', { name: 'deviceorientation', value: { alpha, beta, gamma } })
 );
 
 const eventHandlers = {};
 
+// caches event handlers
 function eventHandler(name, log = true) {
-  return (
-    eventHandlers[name] ||
-    (eventHandlers[name] = value => {
-      if (typeof value != 'number' && typeof value != 'string' && value) {
-        value = value.target.value;
-      }
+  if (eventHandlers[name]) return eventHandlers[name];
 
-      socket.send('event', {
-        name,
-        value,
-      });
+  return (eventHandlers[name] = value => {
+    if (typeof value != 'number' && typeof value != 'string' && value) {
+      value = value.target.value;
+    }
 
-      if (log) console.log('Event:', name, '->', value === undefined ? 'value undefined' : value);
-    })
-  );
+    socket.emit('event', {
+      name,
+      value,
+      log,
+    });
+
+    console.log('Event:', name, '->', value === undefined ? 'value undefined' : value);
+  });
 }
 
 export { socket as default, eventHandler, Store };

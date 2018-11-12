@@ -4,7 +4,10 @@
   "description": "Web UI for controlling ESP-Lights",
   "scripts": {
     "install": "install-vscode-extensions",
-    "ui": "cd ui && yarn"
+    "ui": "cd ui && yarn",
+    "daemon": "cd daemon && yarn",
+    "deploy": "cd deploy && yarn",
+    "remote": "node ./deploy/remote-yarn.js"
   },
   "repository": "git@github.com:cinderblock/Party-Lights.git",
   "author": "Cameron Tacklind <cameron@tacklind.com>",
