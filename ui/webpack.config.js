@@ -5,6 +5,7 @@ const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -42,7 +43,7 @@ module.exports = {
         changeOrigin: true,
       },
     },
-    before(app, server) {
+    setup(app, server) {
       setImmediate(() => {
         const qrcode = require('qrcode-terminal');
         const chalk = require('chalk');
