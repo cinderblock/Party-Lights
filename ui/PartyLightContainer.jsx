@@ -21,7 +21,6 @@ class PartyLightContainer extends React.PureComponent {
   render() {
     return (
       <>
-        <Button onClick={eventHandler('hello')}>Hello world!</Button>
       </>
     );
   }
