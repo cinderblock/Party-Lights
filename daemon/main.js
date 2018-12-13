@@ -6,6 +6,7 @@ const WebSocket = require('ws');
 // Local dependencies
 const debug = require('./utils/debug.js');
 const clientUI = require('./ClientUIHandler.js');
+const animation = require('./AnimationHandler.js');
 
 // config
 const socketURL = 'ws://esp-lights/ws';
@@ -36,6 +37,10 @@ const remoteControlServer = clientUI({
 });
 
 debug.green('Hello, world.');
+
+setInterval(() => {
+  remoteControlServer.volatile.emit('frame', { pixels: animation.frame(Date.now()) });
+}, 1000 / 60);
 
 function Shutdown() {
   // Shutdown remote control server

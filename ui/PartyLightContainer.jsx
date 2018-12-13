@@ -7,6 +7,8 @@ import reactAutoBind from 'react-autobind';
 
 import SocketConnection, { eventHandler } from './SocketConnection.js';
 
+import Board from './Board.jsx';
+
 class PartyLightContainer extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -21,6 +23,7 @@ class PartyLightContainer extends React.PureComponent {
   render() {
     return (
       <>
+        <Board />
       </>
     );
   }
