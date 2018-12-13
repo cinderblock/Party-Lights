@@ -12,9 +12,9 @@ const socketURL = 'ws://esp-lights/ws';
 
 const socket = new WebSocket(socketURL);
 
-socket.addEventListener('open', console.log.bind(0, 'Open:'));
-socket.addEventListener('error', console.log.bind(0, 'Error:'));
-socket.addEventListener('message', console.log.bind(0, 'Message:'));
+socket.addEventListener('open', console.log.bind(0, 'Socket Open:'));
+socket.addEventListener('error', err => console.log('Socket Error'));
+socket.addEventListener('message', console.log.bind(0, 'Socket Message:'));
 
 const Store = {};
 
