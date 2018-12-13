@@ -74,12 +74,5 @@ module.exports = function setupClientSocket(eventHandlers) {
     }
   );
 
-  // Send regular updates to UI
-  setInterval(() => {
-    sock.volatile.emit('update', {
-      /* data */
-    });
-  }, 1000 / 30); // at 30 Hz
-
   return sock;
 };
