@@ -9,7 +9,7 @@ const clientUI = require('./ClientUIHandler.js');
 const animation = require('./AnimationHandler.js');
 
 // config
-const socketURL = 'ws://esp-lights/ws';
+const socketURL = 'ws://blink182/ws';
 
 const socket = new WebSocket(socketURL);
 
