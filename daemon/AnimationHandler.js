@@ -1,7 +1,7 @@
 const { width, height, pixels } = require('../ui/PixelMap.js');
 
 function distance(a, b) {
-  return Math.sqrt((a.x - b.x) ** 2, (a.y - b.y) ** 2);
+  return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
 }
 
 function frame(time) {
