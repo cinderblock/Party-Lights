@@ -25,19 +25,26 @@ function Pixel({ x, y, r, g, b, size }) {
   );
 }
 
-function useSocketEvent(event, action) {
+function useSocketEvent(event, action, updateLimit) {
   useEffect(() => {
-    SocketConnection.on(event, action);
-    return () => SocketConnection.removeListener(event, action);
+    let last;
+    function actionWrapper(...args) {
+      if (updateLimit !== undefined) {
+        let now = Date.now();
+        if (now - last < updateLimit) return;
+        last = now;
+      }
+      action(...args);
+    }
+    SocketConnection.on(event, actionWrapper);
+    return () => SocketConnection.removeListener(event, actionWrapper);
   }, []);
 }
 
 export default function Board(props) {
   const [display, setDisplay] = useState();
 
-  useSocketEvent('frame', ({ pixels }) => {
-    setDisplay(pixels);
-  });
+  useSocketEvent('frame', ({ pixels }) => setDisplay(pixels), 1000 / 30);
 
   const ratio = height / width;
 
