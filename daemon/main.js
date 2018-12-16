@@ -21,7 +21,17 @@ socket.addEventListener('error', err => console.log('Socket Error'));
 socket.addEventListener('message', msg => {
   if (msg.type == 'message') {
     if (typeof msg.data == 'string') console.log('Socket String:', msg.data);
-    else console.log('Socket Data:', String.fromCharCode.apply(null, new Uint8Array(msg.data)));
+    else {
+      if (msg.data.length == 12) {
+        // Location message
+        console.log(msg.data);
+      } else {
+        console.log(
+          'Socket Data (' + msg.data.length + '):',
+          String.fromCharCode.apply(null, new Uint8Array(msg.data))
+        );
+      }
+    }
   } else console.log('Socket Message Type:', msg.type);
 });
 
