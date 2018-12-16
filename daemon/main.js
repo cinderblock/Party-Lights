@@ -12,10 +12,18 @@ const animation = require('./AnimationHandler.js');
 const socketURL = 'ws://blink182/ws';
 
 const socket = new WebSocket(socketURL);
+// socket.binaryType = 'arraybuffer';
 
-socket.addEventListener('open', console.log.bind(0, 'Socket Open:'));
+socket.addEventListener('open', () => {
+  // open = true;
+});
 socket.addEventListener('error', err => console.log('Socket Error'));
-socket.addEventListener('message', console.log.bind(0, 'Socket Message:'));
+socket.addEventListener('message', msg => {
+  if (msg.type == 'message') {
+    if (typeof msg.data == 'string') console.log('Socket String:', msg.data);
+    else console.log('Socket Data:', String.fromCharCode.apply(null, new Uint8Array(msg.data)));
+  } else console.log('Socket Message Type:', msg.type);
+});
 
 const Store = {};
 
@@ -38,9 +46,23 @@ const remoteControlServer = clientUI({
 
 debug.green('Hello, world.');
 
+const buff = new Uint8Array(300 * 3);
+
 setInterval(() => {
-  remoteControlServer.volatile.emit('frame', { pixels: animation.frame(Date.now()) });
-}, 1000 / 60);
+  const frame = { pixels: animation.frame(Date.now()) };
+
+  if (socket.readyState === socket.OPEN) {
+    let i = 0;
+    frame.pixels.forEach(({ r, g, b }) => {
+      buff[i++] = r;
+      buff[i++] = g;
+      buff[i++] = b;
+    });
+    socket.send(buff.buffer, { binary: true });
+  }
+
+  remoteControlServer.volatile.emit('frame', frame);
+}, 1000 / 40);
 
 function Shutdown() {
   // Shutdown remote control server
