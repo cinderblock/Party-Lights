@@ -8,7 +8,7 @@
     "reboot": "sudo reboot",
     "kill": "kill $(cat /tmp/daemon.pid 2> /dev/null) 2> /dev/null || :",
     "setup": "yarn install --non-interactive --silent --prod && yarn",
-    "start": "ts-node ."
+    "start": "ts-node --pretty ."
   },
   "main": "main.ts",
   "dependencies": {
