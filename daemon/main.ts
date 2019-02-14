@@ -5,27 +5,27 @@ require('./utils/runningProcessChecker.js')('../daemon.pid', 'kill');
 import debug from './utils/debug';
 import clientUI from './ClientUIHandler';
 import animation from './AnimationHandler';
+import { pixels } from '../PixelMap';
 
-const remoteControlServer = clientUI({
-  // This event happens when mobile devices report their orientation data to the
-  // server.
-  // This could be very useful as a remote.
-  // Careful, this event happens at ~60Hz.
-  deviceorientation: orientation => {
-    // debug.log(orientation);
-  },
+import WS2812 from 'rpi-ws281x-native';
 
-  Shutdown,
-
-  // More event handlers
-});
+const remoteControlServer = clientUI({});
 
 debug.green('Hello, world.');
 
-const buff = new Uint8Array(300 * 3);
+const numLeds = pixels.length;
+
+WS2812.init(numLeds);
+WS2812.setBrightness(255);
+
+const buff = new Uint32Array(numLeds);
 
 setInterval(() => {
   const frame = { pixels: animation(Date.now()) };
+
+  buff.set(frame.pixels.map(({ r, g, b }) => (r << 16) | (g << 8) | b));
+
+  WS2812.render(buff);
 }, 1000 / 40);
 
 function Shutdown() {
