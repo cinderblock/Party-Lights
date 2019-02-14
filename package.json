@@ -14,7 +14,6 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "@types/chalk": "^2.2.0",
     "install-vscode-extensions": "^1.0.0",
     "prettier": "^1.16.4"
   },

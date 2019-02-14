@@ -1,5 +1,6 @@
 // Allow printing with color!
 import chalk, { Chalk } from 'chalk';
+
 // Unfortunately, the way we run this remotely, chalk auto detects that it should be off
 // Let's force it on
 chalk.enabled = true;
@@ -7,12 +8,12 @@ chalk.enabled = true;
 // Look like up to level 3 (256 color support) works
 chalk.level = chalk.level || 3;
 
-function variable(...args) {
+function variable(...args: any[]) {
   console.log(...args.map((val, i) => (i ? chalk.blue : chalk.cyan)(val)));
 }
 
 function makeChalkLog(color: Chalk) {
-  return function(...args) {
+  return function(...args: any[]) {
     console.log(...args.map(val => color(val)));
   };
 }

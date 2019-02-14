@@ -13,11 +13,11 @@ export type Pixel = {
 
 export type Coordinates = { x: number; y: number };
 
-function linearMap(value, low1, high1, low2, high2) {
+function linearMap(value: number, low1: number, high1: number, low2: number, high2: number) {
   return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);
 }
 
-const dist = (a, b) => Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+const dist = (a: Coordinates, b: Coordinates) => Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
 
 function piecewisePath(points: Coordinates[]) {
   const lengths = points.slice(1).map((next, i) => dist(points[i], next));
