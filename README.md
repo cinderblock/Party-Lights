@@ -2,11 +2,11 @@
 
 Web UI to control ESP-Lights
 
-
 [**Node 8+**](https://nodejs.org/en/download) must be installed on your development system.
 
 ```bash
 npm install
+```
 
 ### Running
 
