@@ -82,7 +82,7 @@ async function deploy() {
 
     console.log('GIT WIP:', resetResult);
 
-    await sshConnection.exec('yarn', ['start'], {
+    await sshConnection.exec('sudo', ['yarn', 'start'], {
       cwd: remote.dir + '/daemon',
       onStdout: chunk => process.stdout.write(chunk.toString('utf8')),
       onStderr: chunk => process.stderr.write(chunk.toString('utf8')),
