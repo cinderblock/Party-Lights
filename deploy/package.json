@@ -3,12 +3,15 @@
   "version": "0.0.0",
   "scripts": {
     "setup": "yarn install --non-interactive --silent && yarn",
-    "daemondebug": "node ./run-with-local-log.js"
+    "daemondebug": "ts-node ./run-with-local-log"
   },
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@cinderblock/node-git-wip": "^0.6.1",
-    "node-ssh": "^5.1.2"
+    "@cinderblock/node-git-wip": "^0.6.2",
+    "@types/node": "^11.9.3",
+    "node-ssh": "^5.1.2",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.3"
   }
 }

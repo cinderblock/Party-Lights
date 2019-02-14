@@ -7,7 +7,7 @@ const ServerStarter = require('server-starter');
 
 let clientID = 0;
 
-module.exports = function setupClientSocket(eventHandlers) {
+export default function setupClientSocket(eventHandlers) {
   // Helper function that is run every time a new webUI connects to us
   function setupClientSocket(sock) {
     const ID = clientID++;

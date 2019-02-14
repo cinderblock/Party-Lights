@@ -1,15 +1,20 @@
-const { width, height, pixels } = require('../ui/PixelMap.js');
+import { width, height, pixels } from '../PixelMap';
 
-function distance(a, b) {
+export type Point = {
+  x: number;
+  y: number;
+};
+
+function distance(a: Point, b: Point) {
   return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
 }
 
-function frame(time) {
+export default function frame(time: number) {
   const center = pixels[Math.floor(time / 100) % pixels.length];
   return pixels.map((pixel, i) => {
     const { x, y } = pixel;
 
-    let r, g, b;
+    let r: number, g: number, b: number;
 
     const d = 4 * distance(pixel, center);
 
@@ -21,8 +26,3 @@ function frame(time) {
     return { r, g, b };
   });
 }
-
-module.exports = {
-  frame,
-  // setEffect,
-};

@@ -5,17 +5,25 @@
 
 // const csvFilePath = './pixelMap.csv';
 
+export type Pixel = {
+  x: number;
+  y: number;
+  spot: { size: number } | { size: number; x: number; y: number };
+};
+
+export type Coordinates = { x: number; y: number };
+
 function linearMap(value, low1, high1, low2, high2) {
   return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);
 }
 
 const dist = (a, b) => Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
 
-function piecewisePath(points) {
+function piecewisePath(points: Coordinates[]) {
   const lengths = points.slice(1).map((next, i) => dist(points[i], next));
   const length = lengths.reduce((sum, curr) => sum + curr, 0);
 
-  function map(s, len = length) {
+  function map(s: number, len = length) {
     if (s < 0 || s > len) throw Error('Out of range!');
 
     // Scale to actual length
@@ -38,10 +46,10 @@ function piecewisePath(points) {
   return { length, lengths, map };
 }
 
-const p = (x, y) => ({ x, y });
+const p = (x: number, y: number): Coordinates => ({ x, y });
 
-const width = 100;
-const height = 47.572815533980582524271844660194;
+export const width = 100;
+export const height = 47.572815533980582524271844660194;
 const points = [p(5, 14), p(5, 5), p(95, 5), p(95, 42.6), p(5, 42.6), p(5, 15), p(85, 15), p(85, 32.6), p(7, 32.6)];
 const numPixels = 300;
 
@@ -49,7 +57,7 @@ const path = piecewisePath(points);
 
 console.log('Path length:', path.length);
 
-function pixel(i) {
+function pixel(i: number): Pixel {
   let { x, y } = path.map(i, numPixels - 1);
 
   const spot = { size: 200 };
@@ -74,7 +82,5 @@ function pixel(i) {
   return { x, y, spot };
 }
 
-const pixels = [];
+export const pixels: Pixel[] = [];
 for (let i = 0; i <= numPixels - 1; i++) pixels.push(pixel(i));
-
-module.exports = { width, height, pixels };

@@ -7,17 +7,21 @@
     "ui": "cd ui && yarn",
     "daemon": "cd daemon && yarn",
     "deploy": "cd deploy && yarn",
-    "remote": "node ./deploy/remote-yarn.js"
+    "remote": "ts-node ./deploy/remote-yarn.ts"
   },
   "repository": "git@github.com:cinderblock/Party-Lights.git",
   "author": "Cameron Tacklind <cameron@tacklind.com>",
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
     "install-vscode-extensions": "^1.0.0",
-    "prettier": "^1.15.2"
+    "prettier": "^1.16.4"
   },
   "dependencies": {
-    "yarn": "^1.12.3"
+    "@types/node": "^11.9.3",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.3",
+    "yarn": "^1.13.0"
   }
 }
