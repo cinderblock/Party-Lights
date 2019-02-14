@@ -50,34 +50,26 @@ const p = (x: number, y: number): Coordinates => ({ x, y });
 
 export const width = 100;
 export const height = 47.572815533980582524271844660194;
-const points = [p(5, 14), p(5, 5), p(95, 5), p(95, 42.6), p(5, 42.6), p(5, 15), p(85, 15), p(85, 32.6), p(7, 32.6)];
-const numPixels = 300;
 
-const path = piecewisePath(points);
-
-console.log('Path length:', path.length);
+const numPixels = 90;
 
 function pixel(i: number): Pixel {
-  let { x, y } = path.map(i, numPixels - 1);
+  let x: number, y: number;
+
+  if (i < 30) {
+    y = 10;
+    x = linearMap(i, 0, 29, 10, 90);
+  } else if (i < 60) {
+    y = 20;
+    x = linearMap(i, 30, 59, 90, 10);
+  } else if (i < 90) {
+    y = 30;
+    x = linearMap(i, 60, 89, 10, 90);
+  } else {
+    throw 'Out of range';
+  }
 
   const spot = { size: 200 };
-
-  if (i < 160 || x <= 5) {
-    spot.size = 300;
-    const c = p(width / 2, height / 2);
-
-    // Shift the coordinate system to the center
-    x -= c.x;
-    y -= c.y;
-
-    // Scale points towards the edge
-    x *= 1.07;
-    y *= 1.19;
-
-    // Shift the coordinate system back
-    x += c.x;
-    y += c.y;
-  }
 
   return { x, y, spot };
 }
