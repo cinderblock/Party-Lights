@@ -3,12 +3,16 @@
   "version": "0.0.0",
   "scripts": {
     "setup": "yarn install --non-interactive --silent && yarn",
-    "daemondebug": "node ./run-with-local-log.js"
+    "daemondebug": "node ./run-with-local-log.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "license": "MIT",
   "private": true,
   "dependencies": {
     "@cinderblock/node-git-wip": "^0.6.1",
-    "node-ssh": "^5.1.2"
-  }
+    "node-ssh": "^5.1.2",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
